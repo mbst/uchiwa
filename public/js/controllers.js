@@ -194,8 +194,8 @@ controllerModule.controller('clients', ['$scope', '$routeParams', 'routingServic
 /**
 * Events
 */
-controllerModule.controller('events', ['$scope', '$routeParams','routingService', 'stashesService', 'Page',
-  function ($scope, $routeParams, routingService, stashesService, Page) {
+controllerModule.controller('events', ['$scope', '$routeParams','routingService', 'stashesService', 'Page', '$filter',
+  function ($scope, $routeParams, routingService, stashesService, Page, $filter) {
     Page.setTitle('Events');
     $scope.pageHeaderText = 'Events';
     $scope.predicate = '-check.status';
@@ -211,6 +211,14 @@ controllerModule.controller('events', ['$scope', '$routeParams','routingService'
     $scope.go = routingService.go;
     $scope.permalink = routingService.permalink;
     $scope.stash = stashesService.stash;
+
+    $scope.hideStashesCheckbox = false;
+    $scope.hideStashes = undefined;
+
+    $scope.hideStashesFn = function () {
+      $scope.hideStashes = $scope.hideStashesCheckbox === true ? undefined : false;
+    };
+
   }
 ]);
 

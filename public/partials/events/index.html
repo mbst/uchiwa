@@ -12,6 +12,9 @@
                   <a ng-class="{active: filters.dc == datacenter.name}" ng-click="permalink($event, 'dc', datacenter.name)">{{ datacenter.name }}</a>
                 </li>
               </ul>
+              <div class="nav-filter left">
+                <input type="checkbox" ng-model="hideStashesCheckbox" ng-click="hideStashesFn()" /> Hide <span ng-if="stashes.length">{{stashes.length}}</span> stashes
+              </div>
             </div>
             <div class="col-md-4">
               <div class="row">
@@ -48,7 +51,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="event in events | orderBy:predicate:reverse | filter:filters.q | filter:{dc:filters.dc} | limitTo:filters.limit | buildEvents" ng-click="go('/client/'+event.dc+'/'+event.client.name+'?check='+event.check.name)">
+              <tr ng-repeat="event in events | orderBy:predicate:reverse | filter:{acknowledged: hideStashes} | filter:filters.q | filter:{dc:filters.dc} | limitTo:filters.limit | buildEvents" ng-click="go('/client/'+event.dc+'/'+event.client.name+'?check='+event.check.name)">
                 <td class="well-{{ event.check.status | getStatusClass }}" ng-click="stash($event, event)">
                   <i class="fa {{ event.acknowledged | getAckClass }}"></i>
                 </td>
